@@ -1,0 +1,39 @@
+{
+    "name": "challenge",
+    "version": "1.0.0",
+    "description": "mysql-rest-api",
+    "main": "./src/server/index.js",
+    "scripts": {
+        "start": "node ./src/server/index.js"
+    },
+    "author": "vik.coder@gmail.com",
+    "license": "ISC",
+    "dependencies": {
+        "@hapi/joi": "^17.1.1",
+        "compression": "^1.7.4",
+        "connect-flash": "^0.1.1",
+        "cookie-parser": "^1.4.5",
+        "cors": "^2.8.5",
+        "csurf": "^1.11.0",
+        "dotenv": "^8.2.0",
+        "editorconfig": "^0.15.3",
+        "express": "^4.17.1",
+        "express-session": "^1.17.1",
+        "helmet": "^4.1.1",
+        "jsonwebtoken": "^8.5.1",
+        "mysql": "^2.18.1",
+        "nodemailer": "^6.4.11",
+        "redis": "^3.0.2"
+    },
+    "devDependencies": {
+        "cz-conventional-changelog": "^3.3.0",
+        "eslint": "^7.9.0",
+        "eslint-config-airbnb-base": "^14.2.0",
+        "eslint-plugin-import": "^2.22.0"
+    },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-conventional-changelog"
+        }
+    }
+}
