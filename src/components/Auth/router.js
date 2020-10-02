@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const UserComponent = require('../Auth');
+const AuthComponent = require('../Auth');
 
 /**
  * Express router to mount user related functions on.
@@ -16,7 +16,7 @@ const router = Router();
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/signup', UserComponent.signup);
+router.post('/signup', AuthComponent.signup);
 
 /**
  * Route verify token
@@ -26,7 +26,7 @@ router.post('/signup', UserComponent.signup);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/verify/:token', UserComponent.verify);
+router.get('/verify/:token', AuthComponent.verify);
 
 /**
  * Route login user
@@ -36,7 +36,7 @@ router.get('/verify/:token', UserComponent.verify);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/login', UserComponent.login);
+router.post('/login', AuthComponent.login);
 
 /**
  * Route update connection user
@@ -46,16 +46,6 @@ router.post('/login', UserComponent.login);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/updateConnection', UserComponent.updateConnection);
-
-/**
- * Route logout user
- * @name /auth/logout
- * @function
- * @inner
- * @param {string} path -Express path
- * @param {callback} middleware - Express middleware
- */
-router.get('/logout', UserComponent.logout);
+router.post('/updateConnection', AuthComponent.updateConnection);
 
 module.exports = router;

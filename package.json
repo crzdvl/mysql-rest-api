@@ -1,12 +1,13 @@
 {
     "name": "challenge",
     "version": "1.0.0",
-    "description": "mysql-rest-api",
+    "description": "",
     "main": "./src/server/index.js",
     "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node ./src/server/index.js"
     },
-    "author": "vik.coder@gmail.com",
+    "author": "",
     "license": "ISC",
     "dependencies": {
         "@hapi/joi": "^17.1.1",
@@ -26,14 +27,8 @@
         "redis": "^3.0.2"
     },
     "devDependencies": {
-        "cz-conventional-changelog": "^3.3.0",
         "eslint": "^7.9.0",
         "eslint-config-airbnb-base": "^14.2.0",
         "eslint-plugin-import": "^2.22.0"
-    },
-    "config": {
-        "commitizen": {
-            "path": "./node_modules/cz-conventional-changelog"
-        }
     }
 }
