@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const SellerComponent = require('../Sellers');
+const CategoryComponent = require('../Category');
 const isRole = require('../../polices/isRole');
 
 /**
@@ -10,23 +10,23 @@ const isRole = require('../../polices/isRole');
 const router = Router();
 
 /**
- * Route for create product
- * @name /seller/createProduct
+ * Route for create tag
+ * @name /category/createTag
  * @function
  * @inner
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/createProduct', isRole.isSeller, SellerComponent.createProduct);
+router.post('/create', isRole.isSeller, CategoryComponent.createCategory);
 
 /**
  * Route for create tag
- * @name /seller/createTag
+ * @name /category/createTag
  * @function
  * @inner
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/createTag', isRole.isSeller, SellerComponent.createTag);
+router.get('/all', CategoryComponent.getAllCategories);
 
 module.exports = router;

@@ -9,16 +9,6 @@ const AuthComponent = require('../Auth');
 const router = Router();
 
 /**
- * Route serving a new user
- * @name /v1/signup
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- */
-router.post('/signup', AuthComponent.signup);
-
-/**
  * Route verify token
  * @name /auth/verify/:token
  * @function

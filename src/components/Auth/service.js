@@ -25,11 +25,11 @@ function create({
  * @returns {Promise<Boolean}
  */
 function checkRole(role) {
-    if (role !== 'customers' && role !== 'sellers') {
-        return false;
+    if (role === 'customers' || role === 'sellers') {
+        return true;
     }
 
-    return true;
+    return false;
 }
 
 /**
@@ -140,9 +140,10 @@ function createEmailToken(email, role) {
  * @summary create access token
  * @returns {Promise<ResultSetHeader}
  */
-function createAccessToken(email, role) {
+function createAccessToken(id, email, role) {
     return jwt.sign({
         maxAge: '60s',
+        id,
         email,
         role
     }, process.env.SECRET_KEY);
@@ -155,9 +156,10 @@ function createAccessToken(email, role) {
  * @summary create refresh token
  * @returns {Promise<ResultSetHeader}
  */
-function createRefreshToken(email, role) {
+function createRefreshToken(id, email, role) {
     return jwt.sign({
         maxAge: '7d',
+        id,
         email,
         role
     }, process.env.SECRET_KEY);

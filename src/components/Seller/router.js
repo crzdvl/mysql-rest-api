@@ -1,6 +1,5 @@
 const { Router } = require('express');
-const CustomersComponent = require('../Customers');
-const isRole = require('../../polices/isRole');
+const SellerComponent = require('../Seller');
 
 /**
  * Express router to mount user related functions on.
@@ -10,13 +9,13 @@ const isRole = require('../../polices/isRole');
 const router = Router();
 
 /**
- * Route for getting all preoducts.
- * @name /customer/
+ * Route serving a new user
+ * @name /seller/signup
  * @function
  * @inner
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/', isRole.isCustomer, CustomersComponent.getAllProducts);
+router.post('/signup', SellerComponent.signup);
 
 module.exports = router;

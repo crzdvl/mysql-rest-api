@@ -3,15 +3,30 @@ const { format: formatSql } = require('mysql');
 
 /**
  * @exports
- * @method createTag
- * @param {object} profile
- * @summary create a new tag
+ * @method create
+ * @param {profile, tableField}
+ * @summary create a new user
  * @returns {Promise<ResultSetHeader>}
  */
-function createTag({ name }) {
-    const query = `INSERT INTO tags (name) VALUES ('${name}');`;
+function create({
+    firstname, lastname, password, email
+}) {
+    const query = `INSERT INTO sellers (firstname, lastname, password, email) VALUES ('${firstname}', '${lastname}', '${password}', '${email}');`;
 
     return mySql.query(query);
+}
+
+/**
+ * @method findUserByEmail
+ * @param {email, table}
+ * @returns {any}
+ */
+function findUserByEmail(email) {
+    const emailField = 'email';
+    const query = `SELECT * FROM sellers WHERE ${emailField} = ?`;
+    const params = [email];
+
+    return mySql.query(query, params);
 }
 
 /**
@@ -52,7 +67,8 @@ function intergrationProductsTags(productId, productTags) {
 }
 
 module.exports = {
-    createTag,
     createProduct,
-    intergrationProductsTags
+    intergrationProductsTags,
+    create,
+    findUserByEmail
 };

@@ -1,37 +1,27 @@
-const SellerService = require('./service');
-const AuthService = require('../Auth/service');
-const SellerValidation = require('./validation');
+const CategoryService = require('./service');
+// const AuthService = require('../Auth/service');
+const CategoryValidation = require('./validation');
 const ValidationError = require('../../error/ValidationError');
 const ParamsError = require('../../error/ParamsError');
 
 /**
- * @function createTag
+ * @function getAllTags
  * @param {express.Request} req
  * @param {express.Response} res
  * @param {express.NextFunction} next
  * @returns {Promise < void >}
  */
-async function createTag(req, res, next) {
+async function getAllCategories(req, res, next) {
     try {
-        const { error } = SellerValidation.tag(req.body);
-
-        if (error) {
-            throw new ValidationError(error.details);
-        }
-
-        const tag = await SellerService.createTag(req.body);
+        const categories = await CategoryService.getAllCategories();
 
         return res.status(200).json({
-            status: 'Tag was succesfully created!',
-            tag: tag
+            status: 'all categories.',
+            categories
         });
     } catch (error) {
         if (error instanceof ValidationError) {
             return res.status(422).json({ error: error.message });
-        }
-
-        if (error instanceof ParamsError) {
-            return res.status(403).json({ error: 'params error' });
         }
 
         res.status(500).json({
@@ -44,28 +34,25 @@ async function createTag(req, res, next) {
 }
 
 /**
- * @function createProduct
+ * @function createTag
  * @param {express.Request} req
  * @param {express.Response} res
  * @param {express.NextFunction} next
  * @returns {Promise < void >}
  */
-async function createProduct(req, res, next) {
+async function createCategory(req, res, next) {
     try {
-        const { error } = SellerValidation.product(req.body);
+        const { error } = CategoryValidation.category(req.body);
 
         if (error) {
             throw new ValidationError(error.details);
         }
 
-        const seller = await AuthService.decodeToken(req.header('refreshToken'));
-
-        const product = await SellerService.createProduct(seller.id, req.body);
-        const integration = await SellerService.intergrationProductsTags(product.insertId, req.body.tags);
+        const category = await CategoryService.createTag(req.body);
 
         return res.status(200).json({
-            status: 'Product was succesfully added!',
-            integration
+            status: 'Category was succesfully created!',
+            category
         });
     } catch (error) {
         if (error instanceof ValidationError) {
@@ -86,6 +73,6 @@ async function createProduct(req, res, next) {
 }
 
 module.exports = {
-    createTag,
-    createProduct
+    createCategory,
+    getAllCategories
 };
