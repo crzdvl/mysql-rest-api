@@ -34,7 +34,8 @@ class AuthValidation extends Validation {
     login(profile) {
         return this.Joi.object({
             email: this.Joi.string().email().required(),
-            password: this.Joi.string().required()
+            password: this.Joi.string().required(),
+            role: this.Joi.string().required()
         }).validate(profile, {
             allowUnknown: true
         });

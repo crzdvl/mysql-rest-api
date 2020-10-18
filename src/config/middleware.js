@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const { secret } = require('./env');
+const path = require('path');
 
 module.exports = {
     /**
@@ -15,8 +16,7 @@ module.exports = {
      * @returns void
      */
     init(app) {
-        app.set('views', __dirname + '/..' + '/views');
-        app.set('view engine', 'ejs');
+        // router in the javascript app can render the necessary components
         app.use(
             bodyParser.urlencoded({
                 extended: false

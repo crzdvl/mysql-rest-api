@@ -20,7 +20,17 @@ const router = Router();
 router.post('/create', isRole.isSeller, SellerComponent.createProduct);
 
 /**
- * Route for create tag
+ * Route for getting seller products
+ * @name /product/seller
+ * @function
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/seller', isRole.isSeller, SellerComponent.getSellerProducts);
+
+/**
+ * Route for getting all products
  * @name /product/all
  * @function
  * @inner

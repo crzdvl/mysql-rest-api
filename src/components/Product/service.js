@@ -34,11 +34,23 @@ function findUserByEmail(email) {
  * @param {any}
  * @returns {any}
  */
-function getAllTags() {
-    const sql = 'SELECT * FROM tags;';
+function getAllProducts() {
+    const sql = 'SELECT * FROM products;';
 
     return mySql.query(sql);
 }
+
+/**
+ * @method getSomeData
+ * @param {any}
+ * @returns {any}
+ */
+function getSellerProducts(id) {
+    const sql = `SELECT * FROM products WHERE seller_id=${id};`;
+
+    return mySql.query(sql);
+}
+
 
 /**
  * @exports
@@ -80,7 +92,8 @@ function intergrationProductsTags(productId, productTags) {
 module.exports = {
     create,
     findUserByEmail,
-    getAllTags,
+    getAllProducts,
+    getSellerProducts,
     createProduct,
     intergrationProductsTags
 };

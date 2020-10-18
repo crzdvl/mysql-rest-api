@@ -2,6 +2,13 @@ const mySql = require('../../config/connection').getInstance();
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
 
+/*
+const fs = require('fs');
+const path = require('path');
+console.log(__dirname, 'dirname');
+const file = fs.readFileSync(path.resolve(__dirname, '../../views/letters/index.html'), { encoding: 'utf-8' });
+*/
+
 /**
  * @exports
  * @method create
@@ -77,12 +84,14 @@ function sendEmailToken(email, emailToken) {
             pass: process.env.PASSWORD
         }
     });
-
+    console.log(__dirname, 'dirname');
     const mailOptions = {
         from: 'Company',
         to: email,
         subject: 'Complete your registrattion',
         text: 'Thanks for join our app, please, complete registration!',
+        // html: file
+
         html: '<img src="https://image.winudf.com/v2/image/Y29tLmZ1bm55Y2F0Y29tcGlsYXRpb25fc2NyZWVuXzBfMTUxNzc2NDIzNl8wODA/screen-0.jpg?fakeurl=1&type=.jpg" alt="img" width="250px" />'
             + '</br> Hi! To complete your registration please, <a href="'
             + 'http://localhost:3000/auth/verify/' + emailToken + '">click here</a>'
