@@ -13,6 +13,7 @@
             "ENV": "MYSQL_DBNAME"
         },
         "driver": "mysql",
-        "multipleStatements": true
+        "multipleStatements": true,
+        "filename": "~/db/migrations"
     }
 }

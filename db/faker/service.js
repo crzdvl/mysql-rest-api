@@ -1,7 +1,7 @@
 const faker = require('faker');
 const chalk = require('chalk');
 const { format: formatSql } = require('mysql');
-const mySql = require('../src/config/connection').getInstance();
+const mySql = require('../../src/config/connection').getInstance();
 
 /**
  * @method generatePeoples
@@ -21,11 +21,11 @@ function generatePeoples() {
         let verify = faker.random.arrayElement([0, 1]);
 
         users.push({
-            firstname: firstname,
-            lastname: lastname,
-            email: email,
-            password: password,
-            verify: verify
+            firstname,
+            lastname,
+            email,
+            password,
+            verify
         });
     }
 
@@ -71,13 +71,18 @@ function generateProducts() {
 
     let products = [];
 
-    for (let i = 0; i <= 1000; i += 1) {
+    for (let i = 0; i <= 500000; i += 1) {
         let name = faker.commerce.productName();
         let price = faker.commerce.price();
+        let seller_id = faker.random.number({
+            min: 1,
+            max: 500
+        });
 
         products.push({
-            name: name,
-            price: price
+            name,
+            price,
+            seller_id
         });
     }
 

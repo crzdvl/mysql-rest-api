@@ -1,13 +1,13 @@
 const XLSX = require('xlsx');
 const dataType = require('db-migrate-shared').dataType;
 
-const sellersData = XLSX.readFile('tables/sellers.xlsx');
-const sheetNameListSellers = sellersData.SheetNames;
-const xlDataSellers = XLSX.utils.sheet_to_json(sellersData.Sheets[sheetNameListSellers[0]]);
+const customersData = XLSX.readFile('db/tables/customers.xlsx');
+const sheetNameListCustomers = customersData.SheetNames;
+const xlDataCustomers = XLSX.utils.sheet_to_json(customersData.Sheets[sheetNameListCustomers[0]]);
 
 module.exports = {
     async up(db) {
-        await db.createTable('sellers', {
+        await db.createTable('customers', {
             id: {
                 type: dataType.BIGINT,
                 primaryKey: true,
@@ -30,12 +30,12 @@ module.exports = {
             }
         });
 
-        await xlDataSellers.forEach((value) => {
-            db.insert('sellers', ['firstname', 'lastname', 'password', 'email', 'verify'], [value.firstname, value.lastname, value.password, value.email, value.verify]);
+        await xlDataCustomers.forEach((value) => {
+            db.insert('customers', ['firstname', 'lastname', 'password', 'email', 'verify'], [value.firstname, value.lastname, value.password, value.email, value.verify]);
         });
     },
 
     async down(db) {
-        await db.dropTable('sellers');
+        await db.dropTable('customers');
     }
 };

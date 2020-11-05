@@ -1,7 +1,7 @@
 const XLSX = require('xlsx');
 const dataType = require('db-migrate-shared').dataType;
 
-const productsData = XLSX.readFile('tables/products.xlsx');
+const productsData = XLSX.readFile('db/tables/products.xlsx');
 const sheetNameListProducts = productsData.SheetNames;
 const xlDataProducts = XLSX.utils.sheet_to_json(productsData.Sheets[sheetNameListProducts[0]]);
 
@@ -15,11 +15,14 @@ module.exports = {
             },
             name: {
                 type: dataType.STRING
+            },
+            seller_id: {
+                type: dataType.INT
             }
         });
 
         await xlDataProducts.forEach((value) => {
-            db.insert('products', ['name'], [value.name]);
+            db.insert('products', ['name', 'seller_id'], [value.name, value.seller_id]);
         });
     },
 

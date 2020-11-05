@@ -1,7 +1,7 @@
 const XLSX = require('xlsx');
 const dataType = require('db-migrate-shared').dataType;
 
-const categoriesData = XLSX.readFile('tables/categories.xlsx');
+const categoriesData = XLSX.readFile('db/tables/categories.xlsx');
 const sheetNameListCategories = categoriesData.SheetNames;
 const xlDataCategories = XLSX.utils.sheet_to_json(categoriesData.Sheets[sheetNameListCategories[0]]);
 
