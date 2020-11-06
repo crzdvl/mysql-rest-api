@@ -9,7 +9,7 @@ const AuthComponent = require('../Auth');
 const router = Router();
 
 /**
- * Route verify token
+ * Route for verifing token
  * @name /auth/verify/:token
  * @function
  * @inner
@@ -19,7 +19,7 @@ const router = Router();
 router.get('/verify/:token', AuthComponent.verify);
 
 /**
- * Route login user
+ * Route for login user
  * @name /auth/login
  * @function
  * @inner
@@ -29,7 +29,7 @@ router.get('/verify/:token', AuthComponent.verify);
 router.post('/login', AuthComponent.login);
 
 /**
- * Route update connection user
+ * Route for updating connection of user
  * @name /auth/updateConnection
  * @function
  * @inner

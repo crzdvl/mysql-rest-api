@@ -5,7 +5,9 @@
     "main": "./src/server/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node ./src/server/index.js"
+        "start": "node ./src/server/index.js",
+        "migrate:up": "db-migrate up -m db/migrations",
+        "migrate:down": "db-migrate down -m db/migrations"
     },
     "author": "melkisa",
     "license": "ISC",
@@ -28,10 +30,12 @@
         "faker": "5.1.0",
         "helmet": "4.1.1",
         "jsonwebtoken": "8.5.1",
+        "lodash": "^4.17.20",
         "mysql": "2.18.1",
         "nodemailer": "6.4.11",
         "nodemon": "^2.0.6",
         "redis": "3.0.2",
+        "swagger-ui-express": "^4.1.4",
         "xlsx": "0.16.8"
     },
     "devDependencies": {

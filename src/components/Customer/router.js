@@ -29,14 +29,4 @@ router.post('/signup', CustomerComponent.signup);
  */
 router.get('/me', isRole.isCustomer, CustomerComponent.getPersonalInformation);
 
-/**
- * Route serving a deletting user
- * @name /customer/delete
- * @function
- * @inner
- * @param {string} path - Express path
- * @param {callback} middleware - Express middleware
- */
-// router.delete('/delete', CustomerComponent.delete);
-
 module.exports = router;

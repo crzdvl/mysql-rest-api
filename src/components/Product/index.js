@@ -1,4 +1,4 @@
-const TagService = require('./service');
+const ProductService = require('./service');
 const AuthService = require('../Auth/service');
 const TagValidation = require('./validation');
 const ValidationError = require('../../error/ValidationError');
@@ -13,7 +13,7 @@ const ParamsError = require('../../error/ParamsError');
  */
 async function getAllProducts(req, res, next) {
     try {
-        const products = await TagService.getAllProducts();
+        const products = await ProductService.getAllProducts();
 
         return res.status(200).json({
             status: 'all products.',
@@ -44,7 +44,7 @@ async function getSellerProducts(req, res, next) {
     try {
         const seller = await AuthService.decodeToken(req.header('refreshToken'));
 
-        const products = await TagService.getSellerProducts(seller.id);
+        const products = await ProductService.getSellerProducts(seller.id);
 
         return res.status(200).json({
             status: 'all seller products.',
@@ -81,8 +81,8 @@ async function createProduct(req, res, next) {
 
         const seller = await AuthService.decodeToken(req.header('refreshToken'));
 
-        const product = await TagService.createProduct(seller.id, req.body);
-        const integration = await TagService.intergrationProductsTags(product.insertId, req.body.tags);
+        const product = await ProductService.createProduct(seller.id, req.body);
+        const integration = await ProductService.intergrationProductsTags(product.insertId, req.body.tags);
 
         return res.status(200).json({
             status: 'Product was succesfully added!',

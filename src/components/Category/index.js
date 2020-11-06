@@ -48,7 +48,7 @@ async function createCategory(req, res, next) {
             throw new ValidationError(error.details);
         }
 
-        const category = await CategoryService.createTag(req.body);
+        const category = await CategoryService.createCategory(req.body);
 
         return res.status(200).json({
             status: 'Category was succesfully created!',

@@ -11,7 +11,7 @@ const router = Router();
 
 /**
  * Route for create tag
- * @name /category/createTag
+ * @name /category/create
  * @function
  * @inner
  * @param {string} path - Express path
@@ -21,7 +21,7 @@ router.post('/create', isRole.isSeller, CategoryComponent.createCategory);
 
 /**
  * Route for create tag
- * @name /category/createTag
+ * @name /category/all
  * @function
  * @inner
  * @param {string} path - Express path

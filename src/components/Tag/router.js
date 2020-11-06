@@ -11,22 +11,22 @@ const router = Router();
 
 /**
  * Route for create tag
- * @name /seller/createTag
+ * @name /tag/create
  * @function
  * @inner
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/createTag', isRole.isSeller, SellerComponent.createTag);
+router.post('/create', isRole.isSeller, SellerComponent.createTag);
 
 /**
- * Route for create tag
- * @name /seller/createTag
+ * Route for getting all tags
+ * @name /tag/
  * @function
  * @inner
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/allTags', SellerComponent.getAllTags);
+router.get('/', SellerComponent.getAllTags);
 
 module.exports = router;

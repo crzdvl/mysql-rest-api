@@ -1,5 +1,7 @@
 const mySql = require('../../config/connection').getInstance();
 const { format: formatSql } = require('mysql');
+const _ = require('lodash');
+const { product } = require('./validation');
 
 /**
  * @exports
@@ -73,17 +75,22 @@ function createProduct(sellerId, { name }) {
  */
 function intergrationProductsTags(productId, productTags) {
     let queryParams = [];
+    let values = [];
+    let query = '';
     const queryStringsArr = [];
     const queryTemplate = ' (?, ?)';
 
-    productTags.forEach(tagID => {
-        queryStringsArr.push(queryTemplate);
-        queryParams = [...queryParams, productId, tagID];
-    });
+    if (_.isArray(productTags)) {
+        productTags.forEach(tagID => {
+            queryStringsArr.push(queryTemplate);
+            queryParams = [...queryParams, productId, tagID];
+        });
+        const queryString = queryStringsArr.join(',');
+        values = formatSql(queryString, queryParams);
 
-    const queryString = queryStringsArr.join(',');
-    const values = formatSql(queryString, queryParams);
-    const query = `INSERT INTO products_tags (product_id, tag_id) VALUES ${values};`;
+        query = `INSERT INTO products_tags (product_id, tag_id) VALUES ${values};`;
+    }
+    query = `INSERT INTO products_tags (product_id, tag_id) VALUES ('${productId}', '${productTags}');`;
 
     return mySql.query(query);
 }

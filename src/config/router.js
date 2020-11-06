@@ -1,12 +1,14 @@
 const express = require('express');
 const http = require('http');
 
-// const TagRouter = require('../components/Tag/router');
+const TagRouter = require('../components/Tag/router');
 const AuthRouter = require('../components/Auth/router');
 const SellerRouter = require('../components/Seller/router');
 const ProductRouter = require('../components/Product/router');
 const CategoryRouter = require('../components/Category/router');
 const CustomerRouter = require('../components/Customer/router');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../common/swager/swagger-json');
 
 module.exports = {
     /**
@@ -26,7 +28,7 @@ module.exports = {
          * @param {string} path - Express path
          * @param {callback} middleware - Express middleware.
          */
-        // app.use('/tag', TagRouter);
+        app.use('/tag', TagRouter);
 
         /**
          * Forwards any requests to the /auth URI to AuthRouter.
@@ -77,6 +79,16 @@ module.exports = {
          * @param {callback} middleware - Express middleware.
          */
         app.use('/customer', CustomerRouter);
+
+        /**
+         * Route serving documentation for this api.
+         * @name /explorer
+         * @function
+         * @inner
+         * @param {string} path - Express path
+         * @param {callback} middleware - Express middleware.
+         */
+        app.use('/explorer', swaggerUi.serve, (...args) => swaggerUi.setup(swaggerDocument)(...args));
 
         /**
          * @description No results returned mean the object is not found

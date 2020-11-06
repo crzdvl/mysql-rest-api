@@ -1,6 +1,6 @@
 const XLSX = require('xlsx');
-const dataType = require('db-migrate-shared').dataType;
 
+const dataType = require('db-migrate-shared').dataType;
 const productsData = XLSX.readFile('db/tables/products.xlsx');
 const sheetNameListProducts = productsData.SheetNames;
 const xlDataProducts = XLSX.utils.sheet_to_json(productsData.Sheets[sheetNameListProducts[0]]);
@@ -17,7 +17,7 @@ module.exports = {
                 type: dataType.STRING
             },
             seller_id: {
-                type: dataType.INT
+                type: dataType.BIGINT
             }
         });
 
