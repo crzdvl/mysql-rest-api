@@ -64,7 +64,7 @@ function updateById(tableField, id, field, data) {
  * @returns {Promise<ResultSetHeader}
  */
 function decodeToken(token) {
-    const verifiedToken = jwt.verify(token, 'secret');
+    const verifiedToken = jwt.verify(token, process.env.SECRET_KEY);
 
     return verifiedToken;
 }

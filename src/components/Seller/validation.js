@@ -12,7 +12,7 @@ class SellerValidation extends Validation {
      * @param {String} profile.firstname
      * @param {String} profile.lastname
      * @returns
-     * @memberof AuthValidation
+     * @memberof SellerValidation
      */
     create(profile) {
         return this.Joi.object({
@@ -26,30 +26,13 @@ class SellerValidation extends Validation {
     }
 
     /**
-     * @param {String} profile.email
-     * @param {String} profile.fullName
-     * @param {String} profile.username
+     * @param {String} profile.id
      * @returns
-     * @memberof AuthValidation
+     * @memberof SellerValidation
      */
-    product(data) {
+    findById(data) {
         return this.Joi.object({
-            name: this.Joi.string().required()
-        }).validate(data, {
-            allowUnknown: true
-        });
-    }
-
-    /**
-     * @param {String} profile.email
-     * @param {String} profile.fullName
-     * @param {String} profile.username
-     * @returns
-     * @memberof AuthValidation
-     */
-    tag(data) {
-        return this.Joi.object({
-            name: this.Joi.string().required()
+            id: this.Joi.string().required()
         }).validate(data, {
             allowUnknown: true
         });

@@ -17,58 +17,31 @@ function create({
 }
 
 /**
- * @method findUserByEmail
- * @param {email, table}
+ * @method findAll
+ * @param {any}
  * @returns {any}
  */
-function findUserByEmail(email) {
-    const emailField = 'email';
-    const query = `SELECT * FROM sellers WHERE ${emailField} = ?`;
-    const params = [email];
+function findAll() {
+    const sql = 'SELECT * FROM sellers;';
+
+    return mySql.query(sql);
+}
+
+/**
+ * @method findById
+ * @param {id}
+ * @returns {any}
+ */
+function findById(id) {
+    const idField = 'id';
+    const query = `SELECT * FROM sellers WHERE ${idField} = ?`;
+    const params = [id];
 
     return mySql.query(query, params);
 }
 
-/**
- * @exports
- * @method createProduct
- * @param {object} profile
- * @summary create a new product
- * @returns {Promise<ResultSetHeader>}
- */
-function createProduct(sellerId, { name }) {
-    const query = `INSERT INTO products (id_seller, name) VALUES ('${sellerId}', '${name}');`;
-
-    return mySql.query(query);
-}
-
-/**
- * @exports
- * @method intergrationProductsTags
- * @param {object} profile
- * @summary create a new product
- * @returns {Promise<ResultSetHeader>}
- */
-function intergrationProductsTags(productId, productTags) {
-    let queryParams = [];
-    const queryStringsArr = [];
-    const queryTemplate = ' (?, ?)';
-
-    productTags.forEach(tagID => {
-        queryStringsArr.push(queryTemplate);
-        queryParams = [...queryParams, productId, tagID];
-    });
-
-    const queryString = queryStringsArr.join(',');
-    const values = formatSql(queryString, queryParams);
-    const query = `INSERT INTO products_tags (id_product, id_tag) VALUES ${values};`;
-
-    return mySql.query(query);
-}
-
 module.exports = {
-    createProduct,
-    intergrationProductsTags,
     create,
-    findUserByEmail
+    findAll,
+    findById
 };
