@@ -51,7 +51,6 @@ function getSellerProducts(id) {
     return mySql.query(sql);
 }
 
-
 /**
  * @exports
  * @method createProduct

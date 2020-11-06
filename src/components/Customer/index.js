@@ -46,6 +46,32 @@ async function signup(req, res, next) {
     }
 }
 
+/**
+ * @function getPersonalInformation
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ * @returns {Promise < void >}
+ */
+async function getPersonalInformation(req, res, next) {
+    try {
+        const decodedToken = await AuthService.decodeToken(req.header('refreshToken'));
+        const customer = await CustomerService.findById(decodedToken.id);
+
+        return res.status(200).json({
+            customer
+        });
+    } catch (error) {
+        res.status(500).json({
+            name: error.name,
+            message: error.message
+        });
+
+        return next(error);
+    }
+}
+
 module.exports = {
-    signup
+    signup,
+    getPersonalInformation
 };
