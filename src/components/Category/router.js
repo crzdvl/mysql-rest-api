@@ -20,13 +20,23 @@ const router = Router();
 router.post('/create', isRole.isSeller, CategoryComponent.createCategory);
 
 /**
- * Route for create tag
- * @name /category/all
+ * Route for get category
+ * @name /category/:id
  * @function
  * @inner
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/all', CategoryComponent.getAllCategories);
+router.get('/:id', CategoryComponent.getCategory);
+
+/**
+ * Route for create tag
+ * @name /category/
+ * @function
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/', CategoryComponent.getAllCategories);
 
 module.exports = router;

@@ -72,7 +72,32 @@ async function createCategory(req, res, next) {
     }
 }
 
+/**
+ * @function getCategory
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ * @returns {Promise < void >}
+ */
+async function getCategory(req, res, next) {
+    try {
+        const category = await CategoryService.findCategory(req.params.id);
+
+        return res.status(200).json({
+            category
+        });
+    } catch (error) {
+        res.status(500).json({
+            name: error.name,
+            message: error.message
+        });
+
+        return next(error);
+    }
+}
+
 module.exports = {
     createCategory,
-    getAllCategories
+    getAllCategories,
+    getCategory
 };

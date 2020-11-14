@@ -25,7 +25,20 @@ function getAllCategories() {
     return mySql.query(sql);
 }
 
+/**
+ * @method findCategory
+ * @param {id}
+ * @returns {any}
+ */
+function findCategory(id) {
+    const query = 'SELECT * FROM categories WHERE id = ?';
+    const params = [id];
+
+    return mySql.query(query, params);
+}
+
 module.exports = {
     getAllCategories,
-    createCategory
+    createCategory,
+    findCategory
 };

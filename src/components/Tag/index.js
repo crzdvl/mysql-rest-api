@@ -72,7 +72,32 @@ async function createTag(req, res, next) {
     }
 }
 
+/**
+ * @function getTag
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ * @returns {Promise < void >}
+ */
+async function getTag(req, res, next) {
+    try {
+        const tag = await TagService.findTag(req.params.id);
+
+        return res.status(200).json({
+            tag
+        });
+    } catch (error) {
+        res.status(500).json({
+            name: error.name,
+            message: error.message
+        });
+
+        return next(error);
+    }
+}
+
 module.exports = {
     createTag,
-    getAllTags
+    getAllTags,
+    getTag
 };

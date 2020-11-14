@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const SellerComponent = require('../Product');
+const ProductComponent = require('../Product');
 const isRole = require('../../polices/isRole');
 
 /**
@@ -17,7 +17,7 @@ const router = Router();
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/create', isRole.isSeller, SellerComponent.createProduct);
+router.post('/create', isRole.isSeller, ProductComponent.createProduct);
 
 /**
  * Route for getting seller products
@@ -27,16 +27,26 @@ router.post('/create', isRole.isSeller, SellerComponent.createProduct);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/seller', isRole.isSeller, SellerComponent.getSellerProducts);
+router.get('/seller', isRole.isSeller, ProductComponent.getSellerProducts);
 
 /**
- * Route for getting all products
- * @name /product/all
+ * Route for get product
+ * @name /product/:id
  * @function
  * @inner
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/all', SellerComponent.getAllProducts);
+router.get('/:id', ProductComponent.getProduct);
+
+/**
+ * Route for getting all products
+ * @name /product/
+ * @function
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/', ProductComponent.getAllProducts);
 
 module.exports = router;

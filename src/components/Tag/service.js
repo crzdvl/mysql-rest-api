@@ -25,7 +25,20 @@ function getAllTags() {
     return mySql.query(sql);
 }
 
+/**
+ * @method findTag
+ * @param {id}
+ * @returns {any}
+ */
+function findTag(id) {
+    const query = 'SELECT * FROM tags WHERE id = ?';
+    const params = [id];
+
+    return mySql.query(query, params);
+}
+
 module.exports = {
     createTag,
-    getAllTags
+    getAllTags,
+    findTag
 };

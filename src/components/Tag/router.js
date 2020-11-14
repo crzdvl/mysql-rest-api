@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const SellerComponent = require('../Tag');
+const TagComponent = require('../Tag');
 const isRole = require('../../polices/isRole');
 
 /**
@@ -17,7 +17,17 @@ const router = Router();
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.post('/create', isRole.isSeller, SellerComponent.createTag);
+router.post('/create', isRole.isSeller, TagComponent.createTag);
+
+/**
+ * Route for get tag
+ * @name /tag/:id
+ * @function
+ * @inner
+ * @param {string} path - Express path
+ * @param {callback} middleware - Express middleware
+ */
+router.get('/:id', TagComponent.getTag);
 
 /**
  * Route for getting all tags
@@ -27,6 +37,6 @@ router.post('/create', isRole.isSeller, SellerComponent.createTag);
  * @param {string} path - Express path
  * @param {callback} middleware - Express middleware
  */
-router.get('/', SellerComponent.getAllTags);
+router.get('/', TagComponent.getAllTags);
 
 module.exports = router;

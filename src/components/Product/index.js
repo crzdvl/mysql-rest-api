@@ -106,8 +106,33 @@ async function createProduct(req, res, next) {
     }
 }
 
+/**
+ * @function getProduct
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ * @returns {Promise < void >}
+ */
+async function getProduct(req, res, next) {
+    try {
+        const product = await ProductService.findProduct(req.params.id);
+
+        return res.status(200).json({
+            product
+        });
+    } catch (error) {
+        res.status(500).json({
+            name: error.name,
+            message: error.message
+        });
+
+        return next(error);
+    }
+}
+
 module.exports = {
     createProduct,
     getAllProducts,
-    getSellerProducts
+    getSellerProducts,
+    getProduct
 };

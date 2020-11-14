@@ -352,7 +352,33 @@ module.exports = {
             responses: swaggerHelpers.responseObject
         }
     },
-    '/category/all': {
+    '/category/{id}': {
+        get: {
+            tags: ['Category'],
+            summary: 'Get category.',
+            description:
+                'Get  category.',
+            consumes: ['application/json'],
+            produces: ['application/json'],
+            responses: swaggerHelpers.responseObject,
+            security: securityObject,
+            parameters: [
+                {
+                    in: 'path',
+                    name: 'id',
+                    required: true,
+                    schema: {
+                        type: 'string',
+                        required: ['id'],
+                        properties: {
+                            token: { type: 'string', example: '1' }
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    '/category/': {
         get: {
             tags: ['Category'],
             summary: 'Get all categories.',
@@ -405,6 +431,32 @@ module.exports = {
                 }
             ],
             responses: swaggerHelpers.responseObject
+        }
+    },
+    '/tag/{id}': {
+        get: {
+            tags: ['Tag'],
+            summary: 'Get tag.',
+            description:
+                'Get  tag.',
+            consumes: ['application/json'],
+            produces: ['application/json'],
+            responses: swaggerHelpers.responseObject,
+            security: securityObject,
+            parameters: [
+                {
+                    in: 'path',
+                    name: 'id',
+                    required: true,
+                    schema: {
+                        type: 'string',
+                        required: ['id'],
+                        properties: {
+                            token: { type: 'string', example: '1' }
+                        }
+                    }
+                }
+            ]
         }
     },
     '/tag/': {
@@ -496,7 +548,33 @@ module.exports = {
             responses: swaggerHelpers.responseObject
         }
     },
-    '/product/all': {
+    '/product/{id}': {
+        get: {
+            tags: ['Product'],
+            summary: 'Get product.',
+            description:
+                'Get  product.',
+            consumes: ['application/json'],
+            produces: ['application/json'],
+            responses: swaggerHelpers.responseObject,
+            security: securityObject,
+            parameters: [
+                {
+                    in: 'path',
+                    name: 'id',
+                    required: true,
+                    schema: {
+                        type: 'string',
+                        required: ['id'],
+                        properties: {
+                            token: { type: 'string', example: '1' }
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    '/product/': {
         get: {
             tags: ['Product'],
             summary: 'Get all products.',
