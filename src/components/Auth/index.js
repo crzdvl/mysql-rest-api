@@ -66,8 +66,9 @@ async function login(req, res, next) {
         }
 
         const user = await AuthService.findUserByField(req.body.role, 'email', req.body.email);
+        const comparePassword = await AuthService.comparePassword(req.body, user[0].password);
 
-        if (user[0].password !== req.body.password || !user[0].verify) {
+        if (!comparePassword || !user[0].verify) {
             throw new ParamsError();
         }
 

@@ -1,6 +1,7 @@
 const mySql = require('../../config/connection').getInstance();
 const nodemailer = require('nodemailer');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 /*
 const fs = require('fs');
@@ -84,7 +85,7 @@ function sendEmailToken(email, emailToken) {
             pass: process.env.PASSWORD
         }
     });
-    console.log(__dirname, 'dirname');
+
     const mailOptions = {
         from: 'Company',
         to: email,
@@ -174,6 +175,32 @@ function createRefreshToken(id, email, role) {
     }, process.env.SECRET_KEY);
 }
 
+/**
+ * @exports
+ * @method hashPassword
+ * @param {password}
+ * @summary hash password
+ * @returns {Promise<ResultSetHeader>}
+ */
+function hashPassword({
+    password
+}) {
+    return bcrypt.hash(password, 10);
+}
+
+/**
+ * @exports
+ * @method comparePassword
+ * @param {password}
+ * @summary compare password
+ * @returns {Promise<ResultSetHeader>}
+ */
+function comparePassword({
+    password
+}, hash) {
+    return bcrypt.compare(password, hash);
+}
+
 module.exports = {
     create,
     checkRole,
@@ -184,5 +211,7 @@ module.exports = {
     findUserByEmail,
     createEmailToken,
     createAccessToken,
-    createRefreshToken
+    createRefreshToken,
+    hashPassword,
+    comparePassword
 };

@@ -3,6 +3,7 @@ const AuthService = require('../Auth/service');
 const CustomerValidation = require('./validation');
 const ValidationError = require('../../error/ValidationError');
 const ParamsError = require('../../error/ParamsError');
+const { hashPassword } = require('./service');
 
 /**
  * @function signup
@@ -20,8 +21,9 @@ async function signup(req, res, next) {
         }
 
         const emailToken = await AuthService.createEmailToken(req.body.email, 'customers');
+        const hashedPassword = await AuthService.hashPassword(req.body);
 
-        await CustomerService.create(req.body);
+        await CustomerService.create(req.body, hashedPassword);
 
         await AuthService.sendEmailToken(req.body.email, emailToken);
 

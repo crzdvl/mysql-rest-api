@@ -9,9 +9,9 @@ const { format: formatSql } = require('mysql');
  * @returns {Promise<ResultSetHeader>}
  */
 function create({
-    firstname, lastname, password, email
-}) {
-    const query = `INSERT INTO sellers (firstname, lastname, password, email) VALUES ('${firstname}', '${lastname}', '${password}', '${email}');`;
+    firstname, lastname, email
+}, password) {
+    const query = `INSERT INTO sellers (firstname, lastname, password, email, verify) VALUES ('${firstname}', '${lastname}', '${password}', '${email}', 0);`;
 
     return mySql.query(query);
 }

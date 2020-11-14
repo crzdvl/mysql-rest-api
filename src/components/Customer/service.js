@@ -8,9 +8,9 @@ const mySql = require('../../config/connection').getInstance();
  * @returns {Promise<ResultSetHeader>}
  */
 function create({
-    firstname, lastname, password, email
-}) {
-    const query = `INSERT INTO customers (firstname, lastname, password, email) VALUES ('${firstname}', '${lastname}', '${password}', '${email}');`;
+    firstname, lastname, email
+}, password) {
+    const query = `INSERT INTO customers (firstname, lastname, password, email, verify) VALUES ('${firstname}', '${lastname}', '${password}', '${email}', 0);`;
 
     return mySql.query(query);
 }

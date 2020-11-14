@@ -20,8 +20,9 @@ async function signup(req, res, next) {
         }
 
         const emailToken = await AuthService.createEmailToken(req.body.email, 'sellers');
+        const hashedPassword = await AuthService.hashPassword(req.body);
 
-        await SellerService.create(req.body);
+        await SellerService.create(req.body, hashedPassword);
 
         await AuthService.sendEmailToken(req.body.email, emailToken);
 
