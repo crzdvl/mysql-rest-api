@@ -3,18 +3,14 @@ const { format: formatSql } = require('mysql');
 const _ = require('lodash');
 
 /**
- * @exports
- * @method create
- * @param {profile, tableField}
- * @summary create a new user
- * @returns {Promise<ResultSetHeader>}
+ * @method getAllProducts
+ * @param {any}
+ * @returns {any}
  */
-function create({
-    firstname, lastname, password, email
-}) {
-    const query = `INSERT INTO sellers (firstname, lastname, password, email) VALUES ('${firstname}', '${lastname}', '${password}', '${email}');`;
+function getAllProducts() {
+    const sql = 'SELECT * FROM products;';
 
-    return mySql.query(query);
+    return mySql.query(sql);
 }
 
 /**
@@ -31,23 +27,46 @@ function findUserByEmail(email) {
 }
 
 /**
- * @method getSomeData
+ * @method getOwnSellerProducts
  * @param {any}
  * @returns {any}
  */
-function getAllProducts() {
-    const sql = 'SELECT * FROM products;';
+function getOwnSellerProducts(id) {
+    const sql = `SELECT * FROM products WHERE seller_id=${id};`;
 
     return mySql.query(sql);
 }
 
 /**
- * @method getSomeData
- * @param {any}
+ * @method getSellerProducts
+ * @param {id}
  * @returns {any}
  */
 function getSellerProducts(id) {
-    const sql = `SELECT * FROM products WHERE seller_id=${id};`;
+    const sql = `SELECT products.id, 
+                products.name,
+                sellers.id,
+                sellers.email
+                FROM products
+                INNER JOIN sellers ON products.seller_id = sellers.id
+                WHERE products.seller_id = '${id}'`;
+
+    return mySql.query(sql);
+}
+
+/**
+ * @method getProductsByCategory
+ * @param {categoryId}
+ * @returns {any}
+ */
+function getProductsByCategory(categoryId) {
+    const sql = `SELECT products.id, 
+                products.name,
+                categories.id,
+                categories.name AS category
+                FROM products
+                INNER JOIN categories ON products.category_id = categories.id
+                WHERE products.category_id = '${categoryId}'`;
 
     return mySql.query(sql);
 }
@@ -106,12 +125,32 @@ function findProduct(id) {
     return mySql.query(query, params);
 }
 
+/**
+ * @method getProductsByTag
+ * @param {id}
+ * @returns {any}
+ */
+function getProductsByTag(tagId) {
+    const query = `SELECT products.id,
+                        products.name,
+                        tags.name,
+                        products_tags.product_id
+                    FROM products_tags
+                    INNER JOIN products ON products.id = products_tags.product_id
+                    INNER JOIN tags ON tags.id = products_tags.tag_id
+                    WHERE tags.id = '${tagId}'`;
+
+    return mySql.query(query);
+}
+
 module.exports = {
-    create,
     findUserByEmail,
     getAllProducts,
     getSellerProducts,
     createProduct,
     intergrationProductsTags,
-    findProduct
+    findProduct,
+    getOwnSellerProducts,
+    getProductsByTag,
+    getProductsByCategory
 };

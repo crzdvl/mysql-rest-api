@@ -574,6 +574,84 @@ module.exports = {
             ]
         }
     },
+    '/product/seller/{sellerId}': {
+        get: {
+            tags: ['Product'],
+            summary: 'Get product from one seller.',
+            description:
+                'Get  product from one seller.',
+            consumes: ['application/json'],
+            produces: ['application/json'],
+            responses: swaggerHelpers.responseObject,
+            security: securityObject,
+            parameters: [
+                {
+                    in: 'path',
+                    name: 'sellerId',
+                    required: true,
+                    schema: {
+                        type: 'string',
+                        required: ['sellerId'],
+                        properties: {
+                            token: { type: 'string', example: '1' }
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    '/product/tag/{tagId}': {
+        get: {
+            tags: ['Product'],
+            summary: 'Get product by tag.',
+            description:
+                'Get product by tag.',
+            consumes: ['application/json'],
+            produces: ['application/json'],
+            responses: swaggerHelpers.responseObject,
+            security: securityObject,
+            parameters: [
+                {
+                    in: 'path',
+                    name: 'tagId',
+                    required: true,
+                    schema: {
+                        type: 'string',
+                        required: ['tagId'],
+                        properties: {
+                            token: { type: 'string', example: '1' }
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    '/product/category/{categoryId}': {
+        get: {
+            tags: ['Product'],
+            summary: 'Get product by category.',
+            description:
+                'Get  product by category.',
+            consumes: ['application/json'],
+            produces: ['application/json'],
+            responses: swaggerHelpers.responseObject,
+            security: securityObject,
+            parameters: [
+                {
+                    in: 'path',
+                    name: 'categoryId',
+                    required: true,
+                    schema: {
+                        type: 'string',
+                        required: ['categoryId'],
+                        properties: {
+                            token: { type: 'string', example: '1' }
+                        }
+                    }
+                }
+            ]
+        }
+    },
     '/product/': {
         get: {
             tags: ['Product'],

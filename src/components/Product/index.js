@@ -40,14 +40,14 @@ async function getAllProducts(req, res, next) {
  * @param {express.NextFunction} next
  * @returns {Promise < void >}
  */
-async function getSellerProducts(req, res, next) {
+async function getOwnSellerProducts(req, res, next) {
     try {
         const seller = await AuthService.decodeToken(req.header('refreshToken'));
 
-        const products = await ProductService.getSellerProducts(seller.id);
+        const products = await ProductService.getOwnSellerProducts(seller.id);
 
         return res.status(200).json({
-            status: 'all seller products.',
+            status: 'your products.',
             products
         });
     } catch (error) {
@@ -130,9 +130,88 @@ async function getProduct(req, res, next) {
     }
 }
 
+/**
+ * @function getSellerProducts
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ * @returns {Promise < void >}
+ */
+async function getSellerProducts(req, res, next) {
+    try {
+        console.log('getSellerProducts');
+        const products = await ProductService.getSellerProducts(req.params.sellerId);
+
+        return res.status(200).json({
+            status: 'all seller products.',
+            products
+        });
+    } catch (error) {
+        res.status(500).json({
+            name: error.name,
+            message: error.message
+        });
+
+        return next(error);
+    }
+}
+
+/**
+ * @function getProductsByTag
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ * @returns {Promise < void >}
+ */
+async function getProductsByTag(req, res, next) {
+    try {
+        const products = await ProductService.getProductsByTag(req.params.tagId);
+
+        return res.status(200).json({
+            status: `products by tag '${req.params.tagId}'`,
+            products
+        });
+    } catch (error) {
+        res.status(500).json({
+            name: error.name,
+            message: error.message
+        });
+
+        return next(error);
+    }
+}
+
+/**
+ * @function getProductsByCategory
+ * @param {express.Request} req
+ * @param {express.Response} res
+ * @param {express.NextFunction} next
+ * @returns {Promise < void >}
+ */
+async function getProductsByCategory(req, res, next) {
+    try {
+        const products = await ProductService.getProductsByCategory(req.params.categoryId);
+
+        return res.status(200).json({
+            status: `products by category '${req.params.categoryId}'`,
+            products
+        });
+    } catch (error) {
+        res.status(500).json({
+            name: error.name,
+            message: error.message
+        });
+
+        return next(error);
+    }
+}
+
 module.exports = {
     createProduct,
     getAllProducts,
+    getOwnSellerProducts,
+    getProduct,
     getSellerProducts,
-    getProduct
+    getProductsByTag,
+    getProductsByCategory
 };

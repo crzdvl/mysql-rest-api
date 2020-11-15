@@ -78,11 +78,16 @@ function generateProducts() {
             min: 1,
             max: 500
         });
+        let category_id = faker.random.number({
+            min: 1,
+            max: 45
+        });
 
         products.push({
             name,
             price,
-            seller_id
+            seller_id,
+            category_id
         });
     }
 
@@ -104,15 +109,15 @@ function addProductsInDB(products) {
     const queryTemplate = ' (?, ?)';
 
     products.forEach(({
-        name, price
+        name, price, seller_id, category_id
     }) => {
         queryStringsArr.push(queryTemplate);
-        queryParams = [...queryParams, name, price];
+        queryParams = [...queryParams, name, price, seller_id, category_id];
     });
 
     const queryString = queryStringsArr.join(',');
     const values = formatSql(queryString, queryParams);
-    const query = `INSERT INTO products (name, price) VALUES ${values};`;
+    const query = `INSERT INTO products (name, price, seller_id, category_id) VALUES ${values};`;
 
     mySql.query(query);
 

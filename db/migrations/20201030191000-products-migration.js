@@ -18,11 +18,14 @@ module.exports = {
             },
             seller_id: {
                 type: dataType.BIGINT
+            },
+            category_id: {
+                type: dataType.BIGINT
             }
         });
 
         await xlDataProducts.forEach((value) => {
-            db.insert('products', ['name', 'seller_id'], [value.name, value.seller_id]);
+            db.insert('products', ['name', 'seller_id', 'category_id'], [value.name, value.seller_id, value.category_id]);
         });
     },
 
