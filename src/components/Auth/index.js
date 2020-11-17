@@ -2,6 +2,7 @@ const AuthService = require('./service');
 const AuthValidation = require('./validation');
 const ValidationError = require('../../error/ValidationError');
 const ParamsError = require('../../error/ParamsError');
+const _ = require('lodash');
 
 /**
  * @function verify
@@ -66,10 +67,19 @@ async function login(req, res, next) {
         }
 
         const user = await AuthService.findUserByField(req.body.role, 'email', req.body.email);
+
+        if (_.isEmpty(user)) {
+            return res.status(200).json({ error: 'at first, you need to sign up.' });
+        }
+
         const comparePassword = await AuthService.comparePassword(req.body, user[0].password);
 
-        if (!comparePassword || !user[0].verify) {
-            throw new ParamsError();
+        if (!comparePassword) {
+            return res.status(200).json({ error: 'your password or email is incorrect.' });
+        }
+
+        if (!user[0].verify) {
+            return res.status(200).json({ error: 'confirm your email adress.' });
         }
 
         const refreshToken = await AuthService.createRefreshToken(user[0].id, user[0].email, req.body.role);

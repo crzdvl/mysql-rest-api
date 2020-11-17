@@ -9,7 +9,7 @@ const _ = require('lodash');
         for (const e of floatPeoples) {
             await service.addPeoplesInDB(e);
         }
-
+/*
         let products = await service.generateProducts();
         const floatProducts = _.chunk(products, 500);
 
@@ -36,7 +36,7 @@ const _ = require('lodash');
 
         for (const e of floatIntegrationProductsTags) {
             await service.addIntegrationsProductsTagsInDB(e);
-        }
+        } */
 
         process.exit(1);
     } catch (error) {

@@ -139,7 +139,6 @@ async function getProduct(req, res, next) {
  */
 async function getSellerProducts(req, res, next) {
     try {
-        console.log('getSellerProducts');
         const products = await ProductService.getSellerProducts(req.params.sellerId);
 
         return res.status(200).json({

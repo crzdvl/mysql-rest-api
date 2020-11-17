@@ -1,7 +1,7 @@
 const faker = require('faker');
 const chalk = require('chalk');
-const { format: formatSql } = require('mysql');
 const mySql = require('../../src/config/connection').getInstance();
+const { format: formatSql } = require('mysql');
 
 /**
  * @method generatePeoples
@@ -9,11 +9,9 @@ const mySql = require('../../src/config/connection').getInstance();
  * @returns {any}
  */
 function generatePeoples() {
-    console.log('started generating peoples');
-
     let users = [];
 
-    for (let i = 0; i <= 1000; i += 1) {
+    for (let i = 0; i <= 10; i += 1) {
         let firstname = faker.name.firstName();
         let lastname = faker.name.lastName();
         let email = faker.internet.email();
@@ -29,8 +27,6 @@ function generatePeoples() {
         });
     }
 
-    console.log(chalk.bgGreen('finished generating peoples'));
-
     return users;
 }
 
@@ -40,8 +36,7 @@ function generatePeoples() {
  * @returns {any}
  */
 function addPeoplesInDB(users) {
-    console.log(chalk.inverse('started adding person in DB'));
-
+    console.log(addPeoplesInDB);
     let queryParams = [];
     const queryStringsArr = [];
     const queryTemplate = ' (?, ?, ?, ?, ?)';
@@ -56,9 +51,8 @@ function addPeoplesInDB(users) {
     const queryString = queryStringsArr.join(',');
     const values = formatSql(queryString, queryParams);
     const query = `INSERT INTO ${faker.random.arrayElement(['sellers', 'customers'])} (firstname, lastname, email, password, verify) VALUES ${values};`;
-    mySql.query(query);
 
-    console.log(chalk.bgGreen('finished adding part of person in DB'));
+    mySql.query(query);
 }
 
 /**
@@ -67,11 +61,9 @@ function addPeoplesInDB(users) {
  * @returns {any}
  */
 function generateProducts() {
-    console.log('started generating products');
-
     let products = [];
 
-    for (let i = 0; i <= 500000; i += 1) {
+    for (let i = 0; i <= 5000; i += 1) {
         let name = faker.commerce.productName();
         let price = faker.commerce.price();
         let seller_id = faker.random.number({
@@ -90,9 +82,6 @@ function generateProducts() {
             category_id
         });
     }
-
-    console.log(chalk.bgGreen('finished generating products'));
-
     return products;
 }
 
@@ -101,14 +90,12 @@ function generateProducts() {
  * @param {any}
  * @returns {any}
  */
-function addProductsInDB(products) {
-    console.log(chalk.inverse('started adding products in DB'));
-
+async function addProductsInDB(products) {
     let queryParams = [];
     const queryStringsArr = [];
     const queryTemplate = ' (?, ?)';
 
-    products.forEach(({
+    await products.forEach(({
         name, price, seller_id, category_id
     }) => {
         queryStringsArr.push(queryTemplate);
@@ -120,8 +107,6 @@ function addProductsInDB(products) {
     const query = `INSERT INTO products (name, price, seller_id, category_id) VALUES ${values};`;
 
     mySql.query(query);
-
-    console.log(chalk.bgGreen('finished adding part of products in DB'));
 }
 
 /**
@@ -130,8 +115,6 @@ function addProductsInDB(products) {
  * @returns {any}
  */
 function generateCategories() {
-    console.log('started generating categories');
-
     let products = [];
 
     for (let i = 0; i <= 45; i += 1) {
@@ -142,8 +125,6 @@ function generateCategories() {
         });
     }
 
-    console.log(chalk.bgGreen('finished generating categories'));
-
     return products;
 }
 
@@ -153,8 +134,6 @@ function generateCategories() {
  * @returns {any}
  */
 function addCategoriesInDB(categories) {
-    console.log(chalk.inverse('started adding categories in DB'));
-
     let queryParams = [];
     const queryStringsArr = [];
     const queryTemplate = ' (?)';
@@ -171,8 +150,6 @@ function addCategoriesInDB(categories) {
     const query = `INSERT INTO categories (name) VALUES ${values};`;
 
     mySql.query(query);
-
-    console.log(chalk.bgGreen('finished adding part of categories in DB'));
 }
 
 /**
@@ -181,8 +158,6 @@ function addCategoriesInDB(categories) {
  * @returns {any}
  */
 function generateTags() {
-    console.log('started generating tags');
-
     let products = [];
 
     for (let i = 0; i <= 45; i += 1) {
@@ -193,8 +168,6 @@ function generateTags() {
         });
     }
 
-    console.log(chalk.bgGreen('finished generating tags'));
-
     return products;
 }
 
@@ -204,8 +177,6 @@ function generateTags() {
  * @returns {any}
  */
 function addTagsInDB(categories) {
-    console.log(chalk.inverse('started adding tags in DB'));
-
     let queryParams = [];
     const queryStringsArr = [];
     const queryTemplate = ' (?)';
@@ -222,8 +193,6 @@ function addTagsInDB(categories) {
     const query = `INSERT INTO tags (name) VALUES ${values};`;
 
     mySql.query(query);
-
-    console.log(chalk.bgGreen('finished adding part of tags in DB'));
 }
 
 /**
@@ -232,8 +201,6 @@ function addTagsInDB(categories) {
  * @returns {any}
  */
 function generateIntegrationsProductsTags() {
-    console.log('started generating tags and products integration');
-
     let products = [];
 
     for (let i = 0; i <= 45; i += 1) {
@@ -253,8 +220,6 @@ function generateIntegrationsProductsTags() {
         });
     }
 
-    console.log(chalk.bgGreen('finished generating tags and products integration'));
-
     return products;
 }
 
@@ -264,8 +229,6 @@ function generateIntegrationsProductsTags() {
  * @returns {any}
  */
 function addIntegrationsProductsTagsInDB(categories) {
-    console.log(chalk.inverse('started adding tags and products integration  in DB'));
-
     let queryParams = [];
     const queryStringsArr = [];
     const queryTemplate = ' (?, ?)';
@@ -283,8 +246,6 @@ function addIntegrationsProductsTagsInDB(categories) {
     const query = `INSERT INTO products_tags (product_id, tag_id) VALUES ${values};`;
 
     mySql.query(query);
-
-    console.log(chalk.bgGreen('finished adding part of tags and products integration in DB'));
 }
 
 module.exports = {

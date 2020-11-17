@@ -9,6 +9,7 @@ const mySql = require('../../config/connection').getInstance();
  * @returns {Promise<ResultSetHeader>}
  */
 function createTag({ name }) {
+    console.log(mySql);
     const query = `INSERT INTO tags (name) VALUES ('${name}');`;
 
     return mySql.query(query);
