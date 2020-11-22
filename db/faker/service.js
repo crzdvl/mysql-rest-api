@@ -1,7 +1,35 @@
-const faker = require('faker');
-const chalk = require('chalk');
-const mySql = require('../../src/config/connection').getInstance();
 const { format: formatSql } = require('mysql');
+const path = require('path');
+const faker = require('faker');
+const fs = require('fs');
+const _ = require('lodash');
+
+const mySql = require('../../src/config/connection').getInstance();
+
+/**
+ * @method createTables
+ * @param {any}
+ * @returns {any}
+ */
+function createTables() {
+    const dataSql = fs.readFileSync(path.join(__dirname, '../sql/tables.sql')).toString();
+
+    const dataArr = dataSql.toString().split(';');
+
+    dataArr.pop();
+
+    dataArr.forEach(query => {
+        if (query) {
+            mySql.query(`${query};`, (err) => {
+            if (err) {
+                throw err;
+            } else {
+                console.log('Query run successfully');
+            }
+        });
+    }
+    });
+}
 
 /**
  * @method generatePeoples
@@ -11,7 +39,7 @@ const { format: formatSql } = require('mysql');
 function generatePeoples() {
     let users = [];
 
-    for (let i = 0; i <= 10; i += 1) {
+    for (let i = 0; i <= 1000; i += 1) {
         let firstname = faker.name.firstName();
         let lastname = faker.name.lastName();
         let email = faker.internet.email();
@@ -36,7 +64,6 @@ function generatePeoples() {
  * @returns {any}
  */
 function addPeoplesInDB(users) {
-    console.log(addPeoplesInDB);
     let queryParams = [];
     const queryStringsArr = [];
     const queryTemplate = ' (?, ?, ?, ?, ?)';
@@ -52,7 +79,7 @@ function addPeoplesInDB(users) {
     const values = formatSql(queryString, queryParams);
     const query = `INSERT INTO ${faker.random.arrayElement(['sellers', 'customers'])} (firstname, lastname, email, password, verify) VALUES ${values};`;
 
-    mySql.query(query);
+    return mySql.query(query);
 }
 
 /**
@@ -90,12 +117,12 @@ function generateProducts() {
  * @param {any}
  * @returns {any}
  */
-async function addProductsInDB(products) {
+function addProductsInDB(products) {
     let queryParams = [];
     const queryStringsArr = [];
-    const queryTemplate = ' (?, ?)';
+    const queryTemplate = ' (?, ?, ?, ?)';
 
-    await products.forEach(({
+    products.forEach(({
         name, price, seller_id, category_id
     }) => {
         queryStringsArr.push(queryTemplate);
@@ -106,7 +133,7 @@ async function addProductsInDB(products) {
     const values = formatSql(queryString, queryParams);
     const query = `INSERT INTO products (name, price, seller_id, category_id) VALUES ${values};`;
 
-    mySql.query(query);
+    return mySql.query(query);
 }
 
 /**
@@ -149,7 +176,7 @@ function addCategoriesInDB(categories) {
     const values = formatSql(queryString, queryParams);
     const query = `INSERT INTO categories (name) VALUES ${values};`;
 
-    mySql.query(query);
+    return mySql.query(query);
 }
 
 /**
@@ -192,7 +219,7 @@ function addTagsInDB(categories) {
     const values = formatSql(queryString, queryParams);
     const query = `INSERT INTO tags (name) VALUES ${values};`;
 
-    mySql.query(query);
+    return mySql.query(query);
 }
 
 /**
@@ -245,10 +272,11 @@ function addIntegrationsProductsTagsInDB(categories) {
     const values = formatSql(queryString, queryParams);
     const query = `INSERT INTO products_tags (product_id, tag_id) VALUES ${values};`;
 
-    mySql.query(query);
+    return mySql.query(query);
 }
 
 module.exports = {
+    createTables,
     generatePeoples,
     addPeoplesInDB,
     generateProducts,
